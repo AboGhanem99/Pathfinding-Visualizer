@@ -53,6 +53,15 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
+  visualizeDijkstra() {
+    const { grid } = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
+
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -61,15 +70,6 @@ export default class PathfindingVisualizer extends Component {
           'node node-shortest-path';
       }, 50 * i);
     }
-  }
-
-  visualizeDijkstra() {
-    const { grid } = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   clear(){
@@ -81,7 +81,6 @@ export default class PathfindingVisualizer extends Component {
 
     return (
       <>
-
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (
@@ -110,6 +109,11 @@ export default class PathfindingVisualizer extends Component {
           })}
           <button className='mainBtn' onClick={() => this.clear()} ><span></span><span></span><span></span><span></span>clear</button>
           <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span>Dijkstra's Algorithm</button>
+          <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span> A* search</button>
+          <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span>Swarm algorithm</button>
+          <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span>Greedy-best first search</button>
+          <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span>Depth-first search </button>
+          <button  onClick={() => this.visualizeDijkstra()} ><span></span><span></span><span></span><span></span>Breadth-first search </button>
         </div>
       </>
     );
